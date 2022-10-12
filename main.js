@@ -6,7 +6,6 @@ $(document).ready(function () {
   myList();
   // $('#table').DataTable();
   // mydelete();
-  $('#table').DataTable();
   $("#myInput").on("keyup", function() {
     var value = $(this).val().toLowerCase();
     $("#myTable tr").filter(function() {
@@ -113,6 +112,7 @@ function myPost() {
 }
 
 //list all data from record...
+
 function myList() {
   var query = {
     size: 100,
@@ -145,7 +145,6 @@ function myList() {
     contentType: "application/json",
 
     success: function (requestedResult) {
-      // alert("success");
       console.log(requestedResult);
       reset();
       var datajson = JSON.parse(requestedResult.result);
@@ -155,36 +154,77 @@ function myList() {
       //looping all data...
       var table = $("#table tbody");
       table.empty();
-      hits.forEach((element) => {
-        var id = element._id;
-        console.log(id);
-        table.append(
-          "<tr><td>" +
-            element._source.firstName +
-            "</td><td>" +
-            element._source.secondName +
-            "</td><td>" +
-            element._source.age +
-            "</td><td>" +
-            element._source.moblieNo +
-            "</td><td>" +
-            element._source.postNo +
-            "</td><td>" +
-            element._source.state +
-            "</td><td>" +
-            element._source.area +
-            "</td><td>" +
-            element._source.emailId +
-            "</td><td>" +
-            element._source.country +
-            "</td><td><button onclick = \"myEdit('" +
-            id +
-            "')\">Edit</button><button onclick = \"myDelete('" +
-            id +
-            "')\">delete</button></td></tr>"
-        );
-        console.log(element);
-      });
+     console.log(hits)
+
+
+//data table calling function...
+     $("#table").DataTable({
+        data: (hits),
+        columns: [
+        { data: '_source.firstName' },
+        { data: '_source.secondName' },
+        { data: '_source.age' },
+        { data: '_source.moblieNo' }, 
+        { data: '_source.postNo' },
+        { data: '_source.state' },
+         { data: '_source.area' },
+        { data: '_source.emailId' },
+        { data: '_source.country' },
+        {
+          data: '_id', "render": function (_id) {
+            // console.log(x);
+            console.log(_id);
+            return '<button onclick="myEdit(\'' + _id + '\')" > Edit</button >';
+          }
+        },
+        {
+          data: '_id', "render": function (_id) {
+            // console.log(x);
+            console.log(_id);
+            return '<button onclick="myDelete(\'' + _id + '\')" > Delete</button >';
+          }
+        }
+          
+     ]
+      });  
+
+
+
+
+
+     //for each to list data operation............................
+      // hits.forEach((element) => {
+      //   var id = element._id;
+      //   console.log(id);
+      
+
+      //   table.append(
+      //     "<tr><td>" +
+      //       element._source.firstName +
+      //       "</td><td>" +
+      //       element._source.secondName +
+      //       "</td><td>" +
+      //       element._source.age +
+      //       "</td><td>" +
+      //       element._source.moblieNo +
+      //       "</td><td>" +
+      //       element._source.postNo +
+      //       "</td><td>" +
+      //       element._source.state +
+      //       "</td><td>" +
+      //       element._source.area +
+      //       "</td><td>" +
+      //       element._source.emailId +
+      //       "</td><td>" +
+      //       element._source.country +
+      //       "</td><td><button onclick = \"myEdit('" +
+      //       id +
+      //       "')\">Edit</button><button onclick = \"myDelete('" +
+      //       id +
+      //       "')\">delete</button></td></tr>"
+      //   );
+      //   console.log(element);
+      // });
     },
     error: function () {
       alert("error");
