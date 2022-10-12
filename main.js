@@ -4,20 +4,10 @@ var RECORD_ID = 7938;
 
 $(document).ready(function () {
   myList();
+  
   // $('#table').DataTable();
   // mydelete();
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
 });
-
-
-
-
-
 
 function reset() {
   $("#firstName").val("");
@@ -47,72 +37,68 @@ function myPost() {
   var userid = $("#id").val();
   console.log(userid);
 
-
-  
- if (user.firstName&&user.secondName&&user.age&& user.moblieNo&&user.postNo&&user.state&&user.area&&user.emailId&&user.country) {
-  Swal.fire({
-    title: 'SUBMIT',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'OK'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire(
-        'SUCCESS!',
-        'Your file has been added.',
-        'success'
-      )
-    }
-    myList();
-  })
-        //first name and age is required
-        if (userid) {
-          dyUrl =
-            API_URL +
-            "/api/record/insert/static/" +
-            API_AUTH +
-            "/" +
-            RECORD_ID +
-            "/" +
-            userid;
-        } else {
-          dyUrl =
-            API_URL + "/api/record/insert/dynamic/" + API_AUTH + "/" + RECORD_ID;
-        }
-        var userStringify = JSON.stringify(user);
-        console.log(user.age);
-        console.log(userStringify);
-    
-        $.ajax({
-          url: dyUrl,
-          method: "POST",
-          data: userStringify,
-          contentType: "text/plain",
-          success: function () {
-           
-            myList();
-            reset();
-          },
-          error: function () {
-            alert("error");
-          },
-        });
-      } else {
-        alert("fill all fields");
+  if (
+    user.firstName &&
+    user.secondName &&
+    user.age &&
+    user.moblieNo &&
+    user.postNo &&
+    user.state &&
+    user.area &&
+    user.emailId &&
+    user.country
+  ) {
+    Swal.fire({
+      title: "SUBMIT",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "OK",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("SUCCESS!", "Your file has been added.", "success");
       }
+      myList();
+    });
+    //first name and age is required
+    if (userid) {
+      dyUrl =
+        API_URL +
+        "/api/record/insert/static/" +
+        API_AUTH +
+        "/" +
+        RECORD_ID +
+        "/" +
+        userid;
+    } else {
+      dyUrl =
+        API_URL + "/api/record/insert/dynamic/" + API_AUTH + "/" + RECORD_ID;
+    }
+    var userStringify = JSON.stringify(user);
+    console.log(user.age);
+    console.log(userStringify);
 
-
-
-
-
-  
+    $.ajax({
+      url: dyUrl,
+      method: "POST",
+      data: userStringify,
+      contentType: "text/plain",
+      success: function () {
+        myList();
+        reset();
+      },
+      error: function () {
+        alert("error");
+      },
+    });
+  } else {
+    alert("fill all fields");
+  }
 }
 
 //list all data from record...
-
 function myList() {
   var query = {
     size: 100,
@@ -131,8 +117,7 @@ function myList() {
     type: "RECORD",
     specId: 7938,
   };
-
-  $.ajax({
+ $.ajax({
     url:
       API_URL +
       "/api/elastic/search/query/" +
@@ -150,54 +135,56 @@ function myList() {
       var datajson = JSON.parse(requestedResult.result);
       var hits = datajson.hits.hits;
       console.log(hits);
+      //data table calling function...
+      $("#table").DataTable({
+        data: hits,
+        lengthMenu: [ 5, 10, 20, 50, 100, 200, 500],
+        columns: [
+          { data: "_source.firstName" },
+          { data: "_source.secondName" },
+          { data: "_source.age" },
+          { data: "_source.moblieNo" },
+          { data: "_source.postNo" },
+          { data: "_source.state" },
+          { data: "_source.area" },
+          { data: "_source.emailId" },
+          { data: "_source.country" },
+          {
+            data: "_id",
+            render: function (_id) {
+              // console.log(x);
+              console.log(_id);
+              return (
+                '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" onclick="myEdit(/'+_id+'/)">Edit</button>'
+
+              );
+            },
+          },
+          {
+            data: "_id",
+            render: function (_id) {
+              // console.log(x);
+              console.log(_id);
+              return (
+                '<button type="button" class="btn btn-primary"  onclick="myDelete(/'+_id+'/)">Delete</button>'
+              );
+            },
+          },
+        ],
+        columnDefs: [
+          { orderable: false, targets: [ 5, 7, 8 ] } //This part is ok now
+      ],
+        "pageLength":10
+      });
 
       //looping all data...
-      var table = $("#table tbody");
-      table.empty();
-     console.log(hits)
-
-
-//data table calling function...
-     $("#table").DataTable({
-        data: (hits),
-        columns: [
-        { data: '_source.firstName' },
-        { data: '_source.secondName' },
-        { data: '_source.age' },
-        { data: '_source.moblieNo' }, 
-        { data: '_source.postNo' },
-        { data: '_source.state' },
-         { data: '_source.area' },
-        { data: '_source.emailId' },
-        { data: '_source.country' },
-        {
-          data: '_id', "render": function (_id) {
-            // console.log(x);
-            console.log(_id);
-            return '<button onclick="myEdit(\'' + _id + '\')" > Edit</button >';
-          }
-        },
-        {
-          data: '_id', "render": function (_id) {
-            // console.log(x);
-            console.log(_id);
-            return '<button onclick="myDelete(\'' + _id + '\')" > Delete</button >';
-          }
-        }
-          
-     ]
-      });  
-
-
-
-
-
-     //for each to list data operation............................
+      //   var table = $("#table tbody");
+      //   table.empty();
+      //  console.log(hits)
+      //for each to list data operation............................
       // hits.forEach((element) => {
       //   var id = element._id;
       //   console.log(id);
-      
-
       //   table.append(
       //     "<tr><td>" +
       //       element._source.firstName +
@@ -231,28 +218,32 @@ function myList() {
     },
   });
 }
+myList()
+
 
 //delete data from record.....
 function myDelete(id) {
   // id="94d69d7f-891e-463e-940d-23216c0400ec  "
   Swal.fire({
-    title: 'Are you sure?',
+    title: "Are you sure?",
     text: "You won't be able to revert this!",
-    icon: 'warning',
+    icon: "warning",
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      Swal.fire(
-        'Deleted!',
-        'Your file has been deleted.',
-        'success'
-      )
+      Swal.fire("Deleted!", "Your file has been deleted.", "success");
       $.ajax({
         url:
-          API_URL + "/api/record/delete/" + API_AUTH + "/" + RECORD_ID + "/" + id,
+          API_URL +
+          "/api/record/delete/" +
+          API_AUTH +
+          "/" +
+          RECORD_ID +
+          "/" +
+          id,
         type: "DELETE",
         contentType: "text/plain",
         success: function () {
@@ -264,12 +255,12 @@ function myDelete(id) {
         },
       });
     }
-  })
+  });
 }
 
 //Edit the record
 function myEdit(id) {
-  $("#editShow").show();  //showup edit container 
+  // $("#editShow").show(); //showup edit container
   $.ajax({
     url:
       "https://onprem.boodskap.io/api/record/get/" +
@@ -303,10 +294,6 @@ function myEdit(id) {
   });
 }
 
-
-
-
-
 //delete all........
 // function mydeleteall() {
 //   alert("delete all");
@@ -323,8 +310,6 @@ function myEdit(id) {
 //     },
 //   });
 // }
-
-
 
 //sort function.....
 // function sortTable() {

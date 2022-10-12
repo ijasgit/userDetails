@@ -27,5 +27,9 @@ padding: 0px 10px;
 background-color: rgb(182, 222, 209);
 }
 
+#backbtn{
+    height: 28px;
+    width: 64px;
+}
 
 
