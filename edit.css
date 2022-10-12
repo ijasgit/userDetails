@@ -1,0 +1,32 @@
+body{
+    background-color: aliceblue;
+
+}
+div{
+    margin-bottom: 10px;
+}
+
+td{
+    border: 1px solid black;
+}
+#btnRow{
+    display: flex;
+    gap: 20px;
+}
+#backbtn a{
+   color: black;
+    text-decoration: none;
+}
+section{
+    display: flex;
+    column-gap: 50px;
+}
+section .editTable{
+border: 1px solid black;
+padding: 0px 10px;
+background-color: rgb(182, 222, 209);
+}
+section .editTable input{
+    text-align: right;
+}
+

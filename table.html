@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="table.css">
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" type="text/css"
+    href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css" />
+<link rel="stylesheet" type="" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <input id="myInput" type="text" placeholder="Search..">
+  <button onclick="sortTable()">Sort</button>
+  <section>
+    <div>
+      <table id="table" style="border: 2px solid black">
+        <thead>
+          <tr>
+            <td>First Name</td>
+            <td>Second Name</td>
+            <td>Age</td>
+            <td>Mobile No</td>
+            <td>Post No</td>
+            <td>State</td>
+            <td>Area</td>
+            <td>E-mail </td>
+            <td>Country</td>
+            <td>Action</td>
+          </tr>
+        </thead>
+
+        <tbody id="myTable"></tbody>
+      </table>
+
+    </div>
+    <div class="editTable" id="editShow" hidden>    
+          <div>
+        <form action="">
+          <input type="text" name="First name" id="id" hidden />
+        </form>
+        <div class="container rounded bg-white mt-5 mb-5 needs-validation">
+          <div>
+
+            <div class="col">
+              <div class="p-3 py-5">
+                <div class="row mt-2">
+                  <div class="col-md-6"><label class="labels ">Name</label><input type="text"
+                      class="form-control form-label" id="firstName" placeholder="first name" value=""></div>
+                  <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control"
+                      id="secondName" value="" placeholder="surname"></div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-12"><label class="labels">Age</label><input type="text" class="form-control"
+                      id="age" placeholder="enter your age" value=""></div>
+                  <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text"
+                      class="form-control" id="mobileNo" placeholder="enter phone number" value=""></div>
+                  <div class="col-md-12"><label class="labels">Postcode</label><input type="text" class="form-control"
+                      id="postNo" placeholder="enter post-No" value=""></div>
+                  <div class="col-md-12"><label class="labels">State</label><input type="text" class="form-control"
+                      id="state" placeholder="enter your state" value=""></div>
+                  <div class="col-md-12"><label class="labels">Area</label><input type="text" class="form-control"
+                      id="area" placeholder="enter your area" value=""></div>
+                  <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control"
+                      id="emailId" placeholder="enter email id" value=""></div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control"
+                      id="country" placeholder="country" value=""></div>
+                </div>
+                <div id="btnRow" class="mt-5 text-center"><button onclick="myPost()"
+                    class="btn btn-primary profile-button" type="button">UPDATE</button><button id="backbtn"
+                    class="btn btn-primary profile-button" type="button"><a
+                      href="http://127.0.0.1:5500/index.html">BACK</a></button>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  </section>
+
+  <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script src="main.js"></script>
+</body>
+
+</html>
