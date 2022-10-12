@@ -14,7 +14,7 @@ td{
     gap: 20px;
 }
 #backbtn a,table a{
-   color: black;
+    color: aliceblue;
     text-decoration: none;
 }
 section{
@@ -28,8 +28,22 @@ background-color: rgb(182, 222, 209);
 }
 
 #backbtn{
-    height: 28px;
-    width: 64px;
+    height: 46px;
+    width: 83px;
+    font-size: 21px;
+    background-color: green;
+}
+table thead tr td{
+    font-family: 'Merriweather', serif;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+table tbody tr td{
+    font-family: 'Prompt', sans-serif;
+    font-size: 18px;
 }
 
-
+table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
+    text-align: center;
+}

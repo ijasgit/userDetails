@@ -4,9 +4,6 @@ var RECORD_ID = 7938;
 
 $(document).ready(function () {
   myList();
-  
-  // $('#table').DataTable();
-  // mydelete();
 });
 
 function reset() {
@@ -39,7 +36,6 @@ function myPost() {
 
   if (
     user.firstName &&
-    user.secondName &&
     user.age &&
     user.moblieNo &&
     user.postNo &&
@@ -62,7 +58,6 @@ function myPost() {
       }
       myList();
     });
-    //first name and age is required
     if (userid) {
       dyUrl =
         API_URL +
@@ -117,7 +112,7 @@ function myList() {
     type: "RECORD",
     specId: 7938,
   };
- $.ajax({
+  $.ajax({
     url:
       API_URL +
       "/api/elastic/search/query/" +
@@ -136,9 +131,11 @@ function myList() {
       var hits = datajson.hits.hits;
       console.log(hits);
       //data table calling function...
-      $("#table").DataTable({
+      datatable = $("#table").DataTable({
+        retrieve: true,
+        destroy: true,
         data: hits,
-        lengthMenu: [ 5, 10, 20, 50, 100, 200, 500],
+        lengthMenu: [5, 10, 20, 50, 100, 200, 500],
         columns: [
           { data: "_source.firstName" },
           { data: "_source.secondName" },
@@ -152,30 +149,34 @@ function myList() {
           {
             data: "_id",
             render: function (_id) {
-              // console.log(x);
               console.log(_id);
               return (
-                '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" onclick="myEdit(/'+_id+'/)">Edit</button>'
-
+                '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" onclick="myEdit(/' +
+                _id +
+                '/)">Edit</button>'
               );
             },
           },
           {
             data: "_id",
             render: function (_id) {
-              // console.log(x);
               console.log(_id);
               return (
-                '<button type="button" class="btn btn-primary"  onclick="myDelete(/'+_id+'/)">Delete</button>'
+                '<button type="button" class="btn btn-primary"  onclick="myDelete(/' +
+                _id +
+                '/)">Delete</button>'
               );
             },
           },
         ],
         columnDefs: [
-          { orderable: false, targets: [ 5, 7, 8 ] } //This part is ok now
-      ],
-        "pageLength":10
+          { orderable: false, targets: [5, 7, 8] }, //This part is ok now
+        ],
+        pageLength: 10,
       });
+
+      //refresh data teble....
+      refreshDataTable = datatable.page("next").draw("page");
 
       //looping all data...
       //   var table = $("#table tbody");
@@ -218,12 +219,10 @@ function myList() {
     },
   });
 }
-myList()
-
+myList();
 
 //delete data from record.....
 function myDelete(id) {
-  // id="94d69d7f-891e-463e-940d-23216c0400ec  "
   Swal.fire({
     title: "Are you sure?",
     text: "You won't be able to revert this!",
@@ -235,6 +234,7 @@ function myDelete(id) {
   }).then((result) => {
     if (result.isConfirmed) {
       Swal.fire("Deleted!", "Your file has been deleted.", "success");
+
       $.ajax({
         url:
           API_URL +
@@ -250,7 +250,7 @@ function myDelete(id) {
           myList();
         },
         error: function () {
-          alert("errro");
+          alert("erro");
           console.log();
         },
       });
@@ -260,7 +260,6 @@ function myDelete(id) {
 
 //Edit the record
 function myEdit(id) {
-  // $("#editShow").show(); //showup edit container
   $.ajax({
     url:
       "https://onprem.boodskap.io/api/record/get/" +
@@ -285,7 +284,6 @@ function myEdit(id) {
 
       console.log(data);
       console.log(id);
-      alert("got it");
     },
     error: function (data) {
       alert("error");
@@ -294,55 +292,4 @@ function myEdit(id) {
   });
 }
 
-//delete all........
-// function mydeleteall() {
-//   alert("delete all");
-//   $.ajax({
-//     url: API_URL + "/api/record/clear/" + API_AUTH + "/" + RECORD_ID,
-//     method: "DELETE",
-//     // data: JSON.stringify(iid),
-//     contentType: "application/json",
-//     success: function () {
-//       alert("success");
-//     },
-//     error: function () {
-//       alert("errro");
-//     },
-//   });
-// }
 
-//sort function.....
-// function sortTable() {
-//   var table, rows, switching, i, x, y, shouldSwitch;
-//   table = document.getElementById("#table");
-//   switching = true;
-//   /*Make a loop that will continue until
-//   no switching has been done:*/
-//   while (switching) {
-//     //start by saying: no switching is done:
-//     switching = false;
-//     rows = table.rows;
-//     /*Loop through all table rows (except the
-//     first, which contains table headers):*/
-//     for (i = 1; i < (rows.length - 1); i++) {
-//       //start by saying there should be no switching:
-//       shouldSwitch = false;
-//       /*Get the two elements you want to compare,
-//       one from current row and one from the next:*/
-//       x = rows[i].getElementsByTagName("td")[0];
-//       y = rows[i + 1].getElementsByTagName("td")[0];
-//       //check if the two rows should switch place:
-//       if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-//         //if so, mark as a switch and break the loop:
-//         shouldSwitch = true;
-//         break;
-//       }
-//     }
-//     if (shouldSwitch) {
-//       /*If a switch has been marked, make the switch
-//       and mark that a switch has been done:*/
-//       rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-//       switching = true;
-//     }
-//   }
-// }
