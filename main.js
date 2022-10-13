@@ -55,39 +55,40 @@ function myPost() {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire("SUCCESS!", "Your file has been added.", "success");
+        if (userid) {
+          dyUrl =
+            API_URL +
+            "/api/record/insert/static/" +
+            API_AUTH +
+            "/" +
+            RECORD_ID +
+            "/" +
+            userid;
+        } else {
+          dyUrl =
+            API_URL + "/api/record/insert/dynamic/" + API_AUTH + "/" + RECORD_ID;
+        }
+        var userStringify = JSON.stringify(user);
+        console.log(user.age);
+        console.log(userStringify);
+    
+        $.ajax({
+          url: dyUrl,
+          method: "POST",
+          data: userStringify,
+          contentType: "text/plain",
+          success: function () {
+            myList();
+            reset();
+          },
+          error: function () {
+            alert("error");
+          },
+        });
       }
       myList();
     });
-    if (userid) {
-      dyUrl =
-        API_URL +
-        "/api/record/insert/static/" +
-        API_AUTH +
-        "/" +
-        RECORD_ID +
-        "/" +
-        userid;
-    } else {
-      dyUrl =
-        API_URL + "/api/record/insert/dynamic/" + API_AUTH + "/" + RECORD_ID;
-    }
-    var userStringify = JSON.stringify(user);
-    console.log(user.age);
-    console.log(userStringify);
-
-    $.ajax({
-      url: dyUrl,
-      method: "POST",
-      data: userStringify,
-      contentType: "text/plain",
-      success: function () {
-        myList();
-        reset();
-      },
-      error: function () {
-        alert("error");
-      },
-    });
+   
   } else {
     alert("fill all fields");
   }
@@ -162,7 +163,7 @@ function myList() {
             render: function (_id) {
               console.log(_id);
               return (
-                '<button type="button" class="btn btn-primary"  onclick="myDelete(/' +
+                '<button type="button" class="btn btn-danger"  onclick="myDelete(/' +
                 _id +
                 '/)">Delete</button>'
               );

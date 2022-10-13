@@ -31,7 +31,7 @@ background-color: rgb(182, 222, 209);
     height: 46px;
     width: 83px;
     font-size: 21px;
-    background-color: green;
+
 }
 table thead tr td{
     font-family: 'Merriweather', serif;
@@ -47,3 +47,4 @@ table tbody tr td{
 table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
     text-align: center;
 }
+
