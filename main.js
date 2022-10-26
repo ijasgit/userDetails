@@ -44,16 +44,16 @@ function myPost() {
     user.emailId &&
     user.country
   ) {
-    Swal.fire({
-      title: "SUBMIT",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "OK",
-    }).then((result) => {
-      if (result.isConfirmed) {
+  Swal.fire({
+    title: "SUBMIT",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "OK",
+  }).then((result) => {
+    if (result.isConfirmed) {
         Swal.fire("SUCCESS!", "Your file has been added.", "success");
         if (userid) {
           dyUrl =
