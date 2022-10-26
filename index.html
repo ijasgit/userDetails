@@ -29,43 +29,55 @@
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h4 class="text-right">Profile Settings</h4>
           </div>
-          <form action="#"  autocomplete="off">
+          <form action=""  autocomplete="off">
             <div class="row mt-2">
-              <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control"
-                  id="firstName" placeholder="first name" value=""  ></div>
+              <div class="col-md-6">
+                <label class="labels">Name</label>
+                <input type="text" class="form-control"
+                  id="firstName" placeholder="first name" value="" required >
+              </div>
 
               <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control"
-                  id="secondName" value="" placeholder="surname" ></div>
+                  id="secondName" value="" placeholder="surname" required></div>
             </div>
 
             <div class="row mt-3">
-              <div class="col-md-12"><label class="labels">Age</label><input type="text" class="form-control" id="age"
-                  placeholder="enter your age" value="" pattern="[0-9]" ></div>
+              <div class="col-md-12"><label class="labels">Age</label><input type="number" class="form-control" id="age"
+                  placeholder="enter your age" value="" required ></div>
 
-              <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" class="form-control"
-                  id="mobileNo" placeholder="enter phone number" value="" ></div>
+              <div class="col-md-12"><label class="labels">Mobile Number</label><input type="number" class="form-control"
+                  id="mobileNo" placeholder="enter phone number" value="" required></div>
 
-              <div class="col-md-12"><label class="labels">Postcode</label><input type="text" class="form-control"
-                  id="postNo" placeholder="enter post-No" value="" ></div>
+              <div class="col-md-12"><label class="labels">Postcode</label><input type="number" class="form-control"
+                  id="postNo" placeholder="enter post-No" value="" required></div>
 
               <div class="col-md-12"><label class="labels">State</label><input type="text" class="form-control"
-                  id="state" placeholder="enter state" value="" ></div>
+                  id="state" placeholder="enter state" value="" required></div>
 
               <div class="col-md-12"><label class="labels">Area</label><input type="text" class="form-control" id="area"
-                  placeholder="enter area" value="" ></div>
+                  placeholder="enter area" value="" required></div>
 
-              <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control"
+              <div class="col-md-12"><label class="labels">Email ID</label><input type="email" class="form-control"
                   id="emailId" placeholder="enter email id" value="" ></div>
             </div>
 
             <div class="row mt-3">
               <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control"
-                  id="country" placeholder="country" value="" ></div>
+                  id="country" placeholder="country" value="" required></div>
             </div>
-            <div id="btnRow" class="mt-5 text-center"><button onclick="myPost()" class="btn btn-primary profile-button"
+            <!-- <div id="btnRow" class="mt-5 text-center"><button onclick="myPost()" class="btn btn-primary profile-button"
                 type="submit">SUBMIT</button><button class="btn btn-primary profile-button" id="listbtn"
                 type="button"><a href="http://127.0.0.1:5500/table.html">LIST</a></button>
-            </div>
+            </div> -->
+            <div id="btnRow" class="mt-5 text-center">  
+              <input onclick="myPost(event)" class="btn btn-primary profile-button"
+              type="button" value="SUBMIT">
+
+              <!-- <button onclick="myPost(event)" class="btn btn-primary profile-button">SUBMIT</button> -->
+              <button class="btn btn-primary profile-button" id="listbtn"
+              type="button"><a href="http://127.0.0.1:5500/table.html">LIST</a></button>
+          </div>
+        
           </form>
         </div>
       </div>

@@ -20,7 +20,8 @@ function reset() {
 }
 
 // insert new data into RECORD...
-function myPost() {
+function myPost(event) {
+ 
   var user = {};
   user.firstName = $("#firstName").val();
   user.secondName = $("#secondName").val();
@@ -33,6 +34,7 @@ function myPost() {
   user.country = $("#country").val();
   var userid = $("#id").val();
   console.log(userid);
+  
 
   if (
     user.firstName &&
@@ -44,16 +46,16 @@ function myPost() {
     user.emailId &&
     user.country
   ) {
-  Swal.fire({
-    title: "SUBMIT",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "OK",
-  }).then((result) => {
-    if (result.isConfirmed) {
+    Swal.fire({
+      title: "SUBMIT",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "OK",
+    }).then((result) => {
+      if (result.isConfirmed) {
         Swal.fire("SUCCESS!", "Your file has been added.", "success");
         if (userid) {
           dyUrl =
@@ -78,15 +80,20 @@ function myPost() {
           data: userStringify,
           contentType: "text/plain",
           success: function () {
-            myList();
+            // myList();
+            // $(".swal-18-confirm .swal2-styled").click
             reset();
+           
           },
           error: function () {
             alert("error");
           },
         });
       }
-      myList();
+       else{
+
+       }
+      // myList();
     });
    
   } else {
@@ -235,7 +242,7 @@ function myDelete(id) {
   }).then((result) => {
     if (result.isConfirmed) {
       Swal.fire("Deleted!", "Your file has been deleted.", "success");
-
+     
       $.ajax({
         url:
           API_URL +
